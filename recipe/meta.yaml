@@ -1,6 +1,5 @@
 {% set version = '1.1-2' %}
 {% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
 
 package:
   name: r-survidinri
@@ -13,8 +12,7 @@ source:
   sha256: 26a74a78663b922717a8900017918d65e6e678d165f2776485580de53b6d82b2
 
 build:
-  merge_build_host: True                # [win]
-  number: 1
+  number: 2
   rpaths:
     - lib/R/lib/
     - lib/
@@ -24,7 +22,9 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}               # [not win]
+    - {{ stdlib("c") }}                 # [not win]
     - {{ compiler('m2w64_c') }}         # [win]
+    - {{ stdlib("m2w64_c") }}           # [win]
     - {{ compiler('fortran') }}         # [not win]
     - {{ compiler('m2w64_fortran') }}   # [win]
     - {{ posix }}filesystem             # [win]
@@ -39,7 +39,6 @@ requirements:
     - r-survival
   run:
     - r-base
-    - {{ native }}gcc-libs              # [win]
     - r-survc1
     - r-survival
 
